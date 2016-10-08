@@ -71,14 +71,14 @@ class Boggle():
                 possibility = self._xy_to_words(path)
                 if possibility in self.word_set:
                     if possibility in self.word_set.get(possibility):
-                        self.onboard.add(self._xy_to_words(path))
+                        self.on_board.add(self._xy_to_words(path))
                     self._traverse(move[0], move[1], path)
 
     def _xy_to_words(self, coordinates):
         """Translate a set of matrix coordinates in order into a word"""
         word = ''
         for coord in coordinates:
-            word += self.m[coord[0]][coord[1]]
+            word += self.matrix[coord[0]][coord[1]]
         return word
 
 # def main():
@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
     board = Boggle(state, wordlist)
 
-    print('num words on the board:', len(board.onboard))
+    print('num words on the board:', len(board.on_board))
 
 # if __name__ == '__main__':
 #     main()
