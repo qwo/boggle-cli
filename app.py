@@ -16,9 +16,9 @@ class Boggle():
         self.COL_LEN = int(len(self.LETTERS)**(.5))
 
         # SETUP GAME OBJECTS
-        self.m = self.matrix()
+        self.matrix = self._build_matrix()
         self.word_set = self._load_words(wordlist)
-        self.onboard = set()
+        self.on_board = set()
 
         # Solve Board
         for x, row in enumerate(self.state.split(' ')):
@@ -49,7 +49,7 @@ class Boggle():
                        d[k].add(word)
             return d
 
-    def matrix(self):
+    def _build_matrix(self):
         """Get a 2D Matrix representation of the board state"""
         return [[l for l in i] for i in self.state.split(' ')]
 
