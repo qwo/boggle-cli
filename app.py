@@ -17,39 +17,35 @@ class Boggle():
 
         # SETUP GAME OBJECTS
         self.m = self.matrix()
-        self.word_set = self.load_words(wordlist)
+        self.word_set = self._load_words(wordlist)
         self.onboard = set()
 
         # Solve Board
         for x, row in enumerate(self.state.split(' ')):
             for y, letter in enumerate(row):
                 print(x,y,letter)
-                self.traverse(x,y)
+                self._traverse(x,y)
 
-    def add_pair(self, a, b):
+    def _add_pair(self, a, b):
         """Add two coordinate pairsets together"""
         return (a[0]+b[0], a[1]+b[1])
 
-    def breakdown_word(self, word):
+    def _breakdown_word(self, word):
         """Use string slices to get all combos of a word from left to right"""
         return [word[:i+1]for i in range(len(word))]
 
-    def check_valid(self, move):
+    def _check_valid(self, move):
         """Check is move is a valid move and not out of bounds for matrix"""
         return True if move[0] >= 0 and move[0] < self.COL_LEN and move[1] >= 0 and move[1] < self.COL_LEN else False
 
-    def grid(self, rows):
-        """Split a board state into rows"""
-        return rows.split(' ')
-
-    def load_words(self, wordlist):
+    def _load_words(self, wordlist):
         """Load words from a wordlist file"""
         d = defaultdict(set)
         with open(wordlist) as words:
             for word in words:
                 word = word.lower().rstrip('\n')
                 if len(word) <= len(self.LETTERS) and len(word) >= self.MIN_LETTERS:
-                   for k in self.breakdown_word(word):
+                   for k in self._breakdown_word(word):
                        d[k].add(word)
             return d
 
@@ -57,7 +53,7 @@ class Boggle():
         """Get a 2D Matrix representation of the board state"""
         return [[l for l in i] for i in self.state.split(' ')]
 
-    def traverse(self, x, y, visited=None):
+    def _traverse(self, x, y, visited=None):
         """Use a trie strategy with backrefs to previous passed positions until done"""
         origin = (x,y)
         if visited is None:
@@ -65,20 +61,20 @@ class Boggle():
             visited = [origin]
 
         # Get valid move list
-        next_moves = [self.add_pair(origin, n) for n in self.MOVESETS if self.check_valid(self.add_pair(origin, n))]
+        next_moves = [self._add_pair(origin, n) for n in self.MOVESETS if self._check_valid(self._add_pair(origin, n))]
 
         # Test each next move
         for move in next_moves:
             if (move not in visited):
                 path = visited + [move]
                 # check next word if possible, if so continue
-                possibility = self.xy_to_words(path)
+                possibility = self._xy_to_words(path)
                 if possibility in self.word_set:
                     if possibility in self.word_set.get(possibility):
-                        self.onboard.add(self.xy_to_words(path))
-                    self.traverse(move[0], move[1], path)
+                        self.onboard.add(self._xy_to_words(path))
+                    self._traverse(move[0], move[1], path)
 
-    def xy_to_words(self, coordinates):
+    def _xy_to_words(self, coordinates):
         """Translate a set of matrix coordinates in order into a word"""
         word = ''
         for coord in coordinates:
