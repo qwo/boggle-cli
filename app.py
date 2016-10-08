@@ -3,12 +3,13 @@ from collections import defaultdict
 import re
 
 state = 'oslc elai tant myse'
+wordlist = 'bsd_wordlist.txt'
 # state = 'to fu'
 # wordlist = 'testwords.txt'
-wordlist = 'bsd_wordlist.txt'
 LETTERS = state.replace(' ', '')
 LETTER_SET = set(i for i in LETTERS)
 COL_LEN = int(len(LETTERS)**(.5))
+MIN_LETTERS = 3
 def grid(b):
     return b.split(' ')
 
@@ -25,7 +26,7 @@ def load_words():
     with open(wordlist) as words:
         for word in words:
             word = word.lower().rstrip('\n')
-            if len(word) <= len(LETTERS):
+            if len(word) <= len(LETTERS) and len(word) >= MIN_LETTERS:
                for k in breakdown_word(word):
                    d[k].add(word)
         return d
@@ -62,7 +63,8 @@ def traverse(x, y, visited=None):
             # check next word if possible, if so continue
             possibility = xy_to_words(path)
             if possibility in word_set:
-                onboard.add(xy_to_words(path))
+                if possibility in word_set.get(possibility):
+                    onboard.add(xy_to_words(path))
                 traverse(move[0], move[1], path)
 
 
