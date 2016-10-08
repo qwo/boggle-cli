@@ -59,9 +59,11 @@ class Boggle():
             # to create a new visited param after first initialized
             visited = [origin]
 
-        # Get valid Move List
-        next_move = [self.add_pair(origin, n) for n in self.MOVESETS if self.check_valid(self.add_pair(origin, n))]
-        for move in next_move:
+        # Get valid move list
+        next_moves = [self.add_pair(origin, n) for n in self.MOVESETS if self.check_valid(self.add_pair(origin, n))]
+
+        # Test each next move
+        for move in next_moves:
             if (move not in visited):
                 path = visited + [move]
                 # check next word if possible, if so continue
