@@ -21,26 +21,29 @@ class Boggle():
         self.onboard = set()
 
         # Solve Board
-        for x, row in enumerate(self.grid(state)):
+        for x, row in enumerate(self.state.split(' ')):
             for y, letter in enumerate(row):
                 print(x,y,letter)
                 self.traverse(x,y)
 
     def add_pair(self, a, b):
+        """Add two coordinate pairsets together"""
         return (a[0]+b[0], a[1]+b[1])
 
     def breakdown_word(self, word):
-        """Use string slices to get all combos of a word"""
+        """Use string slices to get all combos of a word from left to right"""
         return [word[:i+1]for i in range(len(word))]
 
     def check_valid(self, move):
+        """Check is move is a valid move and not out of bounds for matrix"""
         return True if move[0] >= 0 and move[0] < self.COL_LEN and move[1] >= 0 and move[1] < self.COL_LEN else False
 
     def grid(self, rows):
+        """Split a board state into rows"""
         return rows.split(' ')
 
     def load_words(self, wordlist):
-        """"""
+        """Load words from a wordlist file"""
         d = defaultdict(set)
         with open(wordlist) as words:
             for word in words:
@@ -51,9 +54,11 @@ class Boggle():
             return d
 
     def matrix(self):
-        return [[l for l in i] for i in self.grid(self.state)]
+        """Get a 2D Matrix representation of the board state"""
+        return [[l for l in i] for i in self.state.split(' ')]
 
     def traverse(self, x, y, visited=None):
+        """Use a trie strategy with backrefs to previous passed positions until done"""
         origin = (x,y)
         if visited is None:
             # to create a new visited param after first initialized
@@ -74,6 +79,7 @@ class Boggle():
                     self.traverse(move[0], move[1], path)
 
     def xy_to_words(self, coordinates):
+        """Translate a set of matrix coordinates in order into a word"""
         word = ''
         for coord in coordinates:
             word += self.m[coord[0]][coord[1]]
