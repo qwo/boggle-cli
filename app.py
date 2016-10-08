@@ -26,7 +26,7 @@ class Boggle():
                 print(x,y,letter)
                 self.traverse(x,y)
 
-    def add_sets(self, a, b):
+    def add_pair(self, a, b):
         return (a[0]+b[0], a[1]+b[1])
 
     def breakdown_word(self, word):
@@ -60,7 +60,7 @@ class Boggle():
             visited = [origin]
 
         # Get valid Move List
-        next_move = [self.add_sets(origin, n) for n in self.MOVESETS if self.check_valid(self.add_sets(origin, n))]
+        next_move = [self.add_pair(origin, n) for n in self.MOVESETS if self.check_valid(self.add_pair(origin, n))]
         for move in next_move:
             if (move not in visited):
                 path = visited + [move]
