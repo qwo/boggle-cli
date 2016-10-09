@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from collections import defaultdict
 from threading import Timer
+import re
 
 class Boggle():
 
@@ -11,7 +12,9 @@ class Boggle():
         self.MOVESETS = [(1,0), (0,1), (-1,0), (0,-1), (-1,-1), (1,1), (-1,1), (1,-1)]
         self.MIN_LETTERS = 3
         self.LETTERS = state.replace(' ', '')
-        self.LETTER_SET = set(i for i in self.LETTERS)
+        self.LETTER_SET = ''.join(set(i for i in self.LETTERS))
+        self.LETTER_REGEX = re.compile(r"\b[" + self.LETTER_SET + r"]{3,}\b")
+
         self.COL_LEN = int(len(self.LETTERS)**(.5))
 
         # SETUP GAME OBJECTS
@@ -36,6 +39,10 @@ class Boggle():
         """Check is move is a valid move and not out of bounds for matrix"""
         return True if move[0] >= 0 and move[0] < self.COL_LEN and move[1] >= 0 and move[1] < self.COL_LEN else False
 
+    def _check_letters(self, word):
+        """Determines if letters are in word_set """
+        return self.LETTER_REGEX.match(word)
+
     def check_guess(self, guess):
         return guess in self.word_set.get(guess) if self.word_set.get(guess) else False
 
@@ -45,7 +52,7 @@ class Boggle():
         with open(wordlist) as words:
             for word in words:
                 word = word.lower().rstrip('\n')
-                if len(word) <= len(self.LETTERS) and len(word) >= self.MIN_LETTERS:
+                if len(word) <= len(self.LETTERS) and len(word) >= self.MIN_LETTERS and self._check_letters(word):
                    for k in self._breakdown_word(word):
                        d[k].add(word)
             return d
@@ -109,7 +116,8 @@ class GameView():
 
     def end_game(self):
         self.game_running = False
-        print('\nThe words you got correct: ', self.correct)
+        print('\n\n')
+        print('The words you got correct: ', self.correct)
         print('The number of words you guessed: ', len(self.guesses))
         print('Number of possible words on the Board:', len(self.board.on_board))
 
