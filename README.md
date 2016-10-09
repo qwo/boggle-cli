@@ -16,7 +16,7 @@ Play
 - Application has been tested with python 2 and 3
 - The puzzle is predefined and matches the one below.
 - Puzzle can be changed by a new state to line `153` in the form of `state = 'oslc elai tant myse'`
-![Ruzzle Sample](screen240x240.jpeg)
+![Ruzzle Sample](http://stanzheng.com/images/screen240x240.jpeg)
 - The wordlist is obtained from someone who kindly had a copy of [openbsd-src online from their word dict. It is 2.3MBs ](https://github.com/bluerise/openbsd-src/blob/master/share/dict/web2)
 
 Interesting Tidbits
