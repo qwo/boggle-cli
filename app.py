@@ -38,6 +38,9 @@ class Boggle():
         """Check is move is a valid move and not out of bounds for matrix"""
         return True if move[0] >= 0 and move[0] < self.COL_LEN and move[1] >= 0 and move[1] < self.COL_LEN else False
 
+    def check_guess(self, guess):
+        return guess in self.word_set.get(guess) if self.word_set.get(guess) else False
+
     def _load_words(self, wordlist):
         """Load words from a wordlist file"""
         d = defaultdict(set)
