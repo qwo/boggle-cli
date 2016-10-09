@@ -2,7 +2,7 @@
 
 Intro
 ---
-- Command line based Boggle-like game that gives you 60 seconds to guess as many more than 3 letter connecting words on the board
+- Command line based Boggle-like game that gives you 60 seconds to guess as many connecting 3 or more letter connecting words on the board
 - Connecting words can be created by moving in the following directions
   - Across and Backwards
   - Up and Down
