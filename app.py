@@ -22,7 +22,6 @@ class Boggle():
         # Solve Board
         for x, row in enumerate(self.state.split(' ')):
             for y, letter in enumerate(row):
-                print(x,y,letter)
                 self._traverse(x,y)
 
     def _add_pair(self, a, b):
@@ -95,8 +94,8 @@ class GameView():
 
         # Game Objects
         self.game_running = False
-        self.guesses = []
-        self.correct = []
+        self.guesses = set()
+        self.correct = set()
 
     def display_board(self):
         for row in self.matrix:
@@ -110,7 +109,9 @@ class GameView():
 
     def end_game(self):
         self.game_running = False
-        print(self.correct)
+        print('\nThe words you got correct: ', self.correct)
+        print('The number of words you guessed: ', len(self.guesses))
+        print('Number of possible words on the Board:', len(self.board.on_board))
 
 
     def display_board(self):
@@ -126,8 +127,8 @@ class GameView():
 
             if self.game_running is True:
                 if self.board.check_guess(guess):
-                    self.correct.append(guess)
-                self.guesses.append(guess)
+                    self.correct.add(guess)
+                self.guesses.add(guess)
             else:
                 print('Times up!')
 
@@ -142,9 +143,6 @@ if __name__ == '__main__':
     board = Boggle(state, wordlist)
     game = GameView(board)
     game.run()
-
-
-    print('num words on the board:', len(board.on_board))
 
 # if __name__ == '__main__':
 #     main()
