@@ -1,7 +1,6 @@
 #!/usr/bin/python
 from collections import defaultdict
-import re
-
+from threading import Timer
 
 class Boggle():
 
@@ -84,6 +83,55 @@ class Boggle():
             word += self.matrix[coord[0]][coord[1]]
         return word
 
+
+class GameView():
+
+    def __init__(self, board):
+        self.board = board
+        self.matrix = board.matrix
+
+        # CONSTANTS
+        self.TIME_LIMIT = 60
+
+        # Game Objects
+        self.game_running = False
+        self.guesses = []
+        self.correct = []
+
+    def display_board(self):
+        for row in self.matrix:
+            print('\n' + ''.join(row))
+        print('\n')
+
+    def _start_timer(self):
+        self.game_running = True
+        t = Timer(self.TIME_LIMIT, self.end_game)
+        t.start()
+
+    def end_game(self):
+        self.game_running = False
+        print(self.correct)
+
+
+    def display_board(self):
+        for row in self.matrix:
+            print(' '.join(row))
+
+    def run(self):
+        print('Starting game\n\n')
+        self._start_timer()
+        while self.game_running == True:
+            self.display_board()
+            guess = raw_input('\nA guess?: ')
+
+            if self.game_running is True:
+                if self.board.check_guess(guess):
+                    self.correct.append(guess)
+                self.guesses.append(guess)
+            else:
+                print('Times up!')
+
+
 # def main():
 if __name__ == '__main__':
     state = 'oslc elai tant myse'
@@ -92,6 +140,9 @@ if __name__ == '__main__':
     # wordlist = 'testwords.txt'
 
     board = Boggle(state, wordlist)
+    game = GameView(board)
+    game.run()
+
 
     print('num words on the board:', len(board.on_board))
 
