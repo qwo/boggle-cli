@@ -1,5 +1,4 @@
 #Boggle
----
 
 Intro
 ---
@@ -8,7 +7,7 @@ Intro
   - Across and Backwards
   - Up and Down
   - Diagonally and reverse diagonally
-- After 60 seconds are up, all the words that were matched on the wordlist are displayed. Your guesses count is also listed and the number of words possible on the board is listed.
+- After 60 seconds are up, all the words that were matched on the wordlist are displayed. Your unique guesses count and the number of words possible on the board are listed.
 
 Play
 ---
