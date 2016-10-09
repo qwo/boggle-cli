@@ -1,10 +1,15 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+
+
 from collections import defaultdict
 from threading import Timer
 import re
 
 class Boggle():
-
+    """ Game based on a 4x4 Grid where you can form words using adjacent tiles.
+    Connecting tiles may only be used once per word and all valid words on are
+    initialized by the wordlist.
+    """
     def __init__(self, state, wordlist):
 
         self.state = state
