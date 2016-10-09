@@ -10,6 +10,7 @@ class Boggle():
     Connecting tiles may only be used once per word and all valid words on are
     initialized by the wordlist.
     """
+
     def __init__(self, state, wordlist):
 
         self.state = state
@@ -96,6 +97,7 @@ class Boggle():
 
 
 class GameView():
+    """CLI window for Displaying Game logic"""
 
     def __init__(self, board):
         self.board = board
@@ -110,31 +112,30 @@ class GameView():
         self.correct = set()
 
     def display_board(self):
+        """Print out the board space delimited with newline at bottom"""
         for row in self.matrix:
-            print('\n' + ''.join(row))
-        print('\n')
+            print(' '.join(row))
 
-    def _start_timer(self):
-        self.game_running = True
-        t = Timer(self.TIME_LIMIT, self.end_game)
-        t.start()
-
-    def get_correct(self):
-        return ' '.join(self.correct)
-
-    def end_game(self):
+    def _end_game(self):
+        """Display the Results"""
         self.game_running = False
         print('\n\n')
         print('The words you got correct: ', self.get_correct())
         print('The number of words you guessed: ', len(self.guesses))
         print('Number of possible words on the Board:', len(self.board.on_board))
 
+    def get_correct(self):
+        """Getter and formatter for words present on wordlist"""
+        return ' '.join(self.correct)
 
-    def display_board(self):
-        for row in self.matrix:
-            print(' '.join(row))
+    def _start_timer(self):
+        """Start a timer, when it returns we want to tell the user the score"""
+        self.game_running = True
+        t = Timer(self.TIME_LIMIT, self._end_game)
+        t.start()
 
     def run(self):
+        """Starts the Game"""
         print('Starting game\n\n')
         self._start_timer()
         while self.game_running == True:
@@ -150,10 +151,9 @@ class GameView():
 
 
 def main():
+    """Game Starts Here"""
     state = 'oslc elai tant myse'
     wordlist = 'bsd_wordlist.txt'
-    # state = 'to fu'
-    # wordlist = 'testwords.txt'
 
     board = Boggle(state, wordlist)
     game = GameView(board)
