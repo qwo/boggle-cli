@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-
+from six.moves import input
 from collections import defaultdict
 from threading import Timer
 import re
@@ -119,10 +119,13 @@ class GameView():
         t = Timer(self.TIME_LIMIT, self.end_game)
         t.start()
 
+    def get_correct(self):
+        return ' '.join(self.correct)
+
     def end_game(self):
         self.game_running = False
         print('\n\n')
-        print('The words you got correct: ', self.correct)
+        print('The words you got correct: ', self.get_correct())
         print('The number of words you guessed: ', len(self.guesses))
         print('Number of possible words on the Board:', len(self.board.on_board))
 
@@ -136,7 +139,7 @@ class GameView():
         self._start_timer()
         while self.game_running == True:
             self.display_board()
-            guess = raw_input('\nA guess?: ')
+            guess = input('\nA guess?: ')
 
             if self.game_running is True:
                 if self.board.check_guess(guess):
@@ -146,8 +149,7 @@ class GameView():
                 print('Times up!')
 
 
-# def main():
-if __name__ == '__main__':
+def main():
     state = 'oslc elai tant myse'
     wordlist = 'bsd_wordlist.txt'
     # state = 'to fu'
@@ -157,5 +159,5 @@ if __name__ == '__main__':
     game = GameView(board)
     game.run()
 
-# if __name__ == '__main__':
-#     main()
+if __name__ == '__main__':
+    main()
