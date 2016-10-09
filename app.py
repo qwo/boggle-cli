@@ -147,7 +147,7 @@ class GameView():
                     self.correct.add(guess)
                 self.guesses.add(guess)
             else:
-                print('Times up!')
+                print('Game Over!')
 
 
 def main():
