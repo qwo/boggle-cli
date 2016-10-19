@@ -50,7 +50,7 @@ class Boggle():
         return self.LETTER_REGEX.match(word)
 
     def check_guess(self, guess):
-        return guess in self.word_set.get(guess) if self.word_set.get(guess) else False
+        return guess in self.on_board
 
     def _load_words(self, wordlist):
         """Load words from a wordlist file"""
