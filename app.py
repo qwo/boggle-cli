@@ -106,7 +106,7 @@ class GameView():
         self.matrix = board.matrix
 
         # CONSTANTS
-        self.TIME_LIMIT = 2
+        self.TIME_LIMIT = 90
 
         # Game Objects
         self.game_running = False
