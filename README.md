@@ -18,6 +18,11 @@ Play
 ![Ruzzle Sample](http://stanzheng.com/images/screen240x240.jpeg)
 - The wordlist is obtained from someone who kindly had a copy of [openbsd-src online from their word dict. It is 2.3MBs ](https://github.com/bluerise/openbsd-src/blob/master/share/dict/web2)
 
+Tests
+---
+`py.test`
+
+
 Interesting Tidbits
 ---
 Here are some facts and timings about the application. All run on a 2013 MacBook Air.
@@ -45,6 +50,12 @@ len(load_words())
 CPU times: user 2.41 s, sys: 252 ms, total: 2.66 s
 Wall time: 2.85 s
 ```
+
+Todos
+---
+- Fair board generating
+- Accept Participles (smell, smells, smelling, smelled)
+- Scoring and dynamic scoring
 
 LICENSE
 ---
