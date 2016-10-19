@@ -4,7 +4,7 @@ Test Boggle Game Logic
 import pytest
 from app import Boggle
 
-
+# pylint: disable=W0621
 @pytest.fixture
 def board():
     """Sets up game board"""
