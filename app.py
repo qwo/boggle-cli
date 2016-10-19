@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-from six.moves import input
+import re
 from collections import defaultdict
 from threading import Timer
-import re
+from six.moves import input
+
 
 class Boggle():
     """ Game based on a 4x4 Grid where you can form words using adjacent tiles.
@@ -15,11 +16,11 @@ class Boggle():
 
         self.state = state
         # CONSTANTS
-        self.MOVESETS = [(1,0), (0,1), (-1,0), (0,-1), (-1,-1), (1,1), (-1,1), (1,-1)]
+        self.MOVESETS = [(1, 0), (0, 1), (-1, 0), (0, -1), (-1, -1), (1, 1), (-1, 1), (1, -1)]
         self.MIN_LETTERS = 3
         self.LETTERS = state.replace(' ', '')
         self.LETTER_SET = ''.join(set(i for i in self.LETTERS))
-        self.LETTER_REGEX = re.compile(r"\b[" + self.LETTER_SET + r"]{3,}\b")
+        self.LETTER_REGEX = re.compile(r"\b[" + self.LETTER_SET + r"]{1,}\b")
 
         self.COL_LEN = int(len(self.LETTERS)**(.5))
 
@@ -30,8 +31,8 @@ class Boggle():
 
         # Solve Board
         for x, row in enumerate(self.state.split(' ')):
-            for y, letter in enumerate(row):
-                self._traverse(x,y)
+            for y, _ in enumerate(row):
+                self._traverse(x, y)
 
     def _add_pair(self, a, b):
         """Add two coordinate pairsets together"""
@@ -50,6 +51,7 @@ class Boggle():
         return self.LETTER_REGEX.match(word)
 
     def check_guess(self, guess):
+        """Checks if word is on board"""
         return guess in self.on_board
 
     def _load_words(self, wordlist):
@@ -59,8 +61,8 @@ class Boggle():
             for word in words:
                 word = word.lower().rstrip('\n')
                 if len(word) <= len(self.LETTERS) and len(word) >= self.MIN_LETTERS and self._check_letters(word):
-                   for k in self._breakdown_word(word):
-                       d[k].add(word)
+                    for k in self._breakdown_word(word):
+                        d[k].add(word)
             return d
 
     def _build_matrix(self):
@@ -69,7 +71,7 @@ class Boggle():
 
     def _traverse(self, x, y, visited=None):
         """Use a trie strategy with backrefs to previous passed positions until done"""
-        origin = (x,y)
+        origin = (x, y)
         if visited is None:
             # to create a new visited param after first initialized
             visited = [origin]
@@ -79,7 +81,7 @@ class Boggle():
 
         # Test each next move
         for move in next_moves:
-            if (move not in visited):
+            if move not in visited:
                 path = visited + [move]
                 # check next word if possible, if so continue
                 possibility = self._xy_to_words(path)
@@ -104,7 +106,7 @@ class GameView():
         self.matrix = board.matrix
 
         # CONSTANTS
-        self.TIME_LIMIT = 60
+        self.TIME_LIMIT = 2
 
         # Game Objects
         self.game_running = False
@@ -138,7 +140,7 @@ class GameView():
         """Starts the Game"""
         print('Starting game\n\n')
         self._start_timer()
-        while self.game_running == True:
+        while self.game_running is True:
             self.display_board()
             guess = input('\nA guess?: ')
 
