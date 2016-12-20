@@ -56,7 +56,13 @@ Todos
 - Fair board generating
 - Accept Participles (smell, smells, smelling, smelled)
 - Scoring and dynamic scoring
-
+  - http://www.ruzzlecheat.com/en/ruzzle-cheats-for-high-scores.html
+  - http://ruzzleonline.net/ruzzle-tips-to-improve-your-ruzzle-score/
+  - Rules
+      - Implement flat scoring first
+      - Implement Point Bonuses
+      - Implement Special Word bonuses next
 LICENSE
 ---
 MIT
+

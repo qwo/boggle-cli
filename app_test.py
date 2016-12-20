@@ -38,9 +38,18 @@ def test_init_words_possible_moves(board):
     ('caam', True),      # Diagonal and Reverse?
     ('tool', False),     # Non connecting word
     ('still', True),     # False positive
-    ('satellite', True), # Long Word
-    ('elastica', True)   # Long Word
+    ('elastica', True),   # Long Word
+    ('satellite', True) # Long Word
 ])
 def test_game_find_word_length(board, test_word_guess, expected):
     """Test Word guesses"""
     assert(board.check_guess(test_word_guess) == expected)
+
+@pytest.mark.parametrize("test_word_guess, expected", [
+    ('ten', 3),       # Short word
+    ('tan', 3),       # Horizontal
+    ('satellite', len('satellite'))
+])
+def test_game_find_word_length(board, test_word_guess, expected):
+    """Test Word guesses"""
+    assert(board.score_word(test_word_guess) == expected)

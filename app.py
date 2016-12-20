@@ -97,6 +97,14 @@ class Boggle():
             word += self.matrix[coord[0]][coord[1]]
         return word
 
+    def score_word(self, word):
+        """Scores a word"""
+        return len(word)
+
+    def score_word_set(self, words):
+        """Scores a set of words"""
+        return sum(self.score_word(w) for w in words)
+
 
 class GameView():
     """CLI window for Displaying Game logic"""
@@ -122,6 +130,7 @@ class GameView():
         """Display the Results"""
         self.game_running = False
         print('\n\n')
+        print('Your score is: ', self.board.score_word_set(self.correct))
         print('The words you got correct: ', self.get_correct())
         print('The number of words you guessed: ', len(self.guesses))
         print('Number of possible words on the Board:', len(self.board.on_board))
