@@ -62,6 +62,8 @@ Todos
       - Implement flat scoring first
       - Implement Point Bonuses
       - Implement Special Word bonuses next
+
+
 LICENSE
 ---
 MIT
